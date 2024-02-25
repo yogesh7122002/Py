@@ -1,5 +1,6 @@
 import json
-
+import tkinter as tk
+from tkinter import simpledialog
 
 def load_data():
     try :
@@ -18,10 +19,13 @@ def save_data_help(videos):
             
             
 def list_all_videos(videos):
+    print("\n")
+    print("*"*90)
     for index,video in enumerate(videos,start=1):
-        print(f"{index}.{video}")
-    
-    
+        print(f"{index}.{video['name']} , Durathin: {video['time']}")
+
+    print("\n")
+    print("*"*90)
     
 def add_video(videos):
     name =input("Enter Your Video Name :")
@@ -33,13 +37,33 @@ def add_video(videos):
 
 
 def update_details(videos):
-    pass
+    list_all_videos(videos)
+    index =  int(input("Enter The sr.no of video which u want to update :"))
+    
+    if 1<=index <=len(videos):
+        current_name = videos[index-1]['name']
+        current_time = videos[index-1]['time']
+        # # new_name = input(f"Enter the new name (current name: {current_name}): ") or current_name
+        # new_name = simpledialog.askstring("Input", f"Enter the new name (current name: {current_name}): ",
+        #                                   initialvalue=current_name)
+        name=input(f"Enter The new video Name  (current name : {current_name}): ")
+        time=input(f"Enter new video Duration (current time:{current_time}) :")
+        videos[index-1]={'name':name,'time':time}
+        save_data_help(videos)
+    else :
+        print("""Inavlid Index""")
+    
 
 
 
-def delete_video() :
-    pass
-
+def delete_video(videos) :
+    list_all_videos(videos)
+    index =  int(input("Enter The sr.no of video which u want to Delete :"))
+    if 1<=index <len(videos):
+        del videos[index-1]
+        save_data_help(videos)
+    else :
+        print("""Inavlid Index""")
 
 
 def main():
